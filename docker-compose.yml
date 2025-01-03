@@ -1,0 +1,45 @@
+services:
+    php:
+        build:
+            context: .
+            dockerfile: ./docker/php/Dockerfile
+        entrypoint: php artisan octane:frankenphp --max-requests=1
+        ports:
+            - "3000:3000"
+            - "80:8000"
+            - "5173:5173" # viteのポート
+        volumes:
+            - ./src:/app
+            - /app/vendor # vendorを除外
+            - ./docker/caddy/data:/data
+            - ./docker/caddy/config:/config
+            - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    mariadb:
+        build:
+            context: .
+            dockerfile: ./docker/mysql/Dockerfile
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+        volumes:
+            - ./docker/mysql/data:/var/lib/mysql
+            - ./docker/mysql/log:/var/log/mysql
+    phpmyadmin:
+        build:
+            context: .
+            dockerfile: ./docker/phpmyadmin/Dockerfile
+        ports:
+            - 8081:80
+        links:
+            - mariadb
+        environment:
+            PMA_HOST: mariadb
+            PMA_PORT: 3306
+        volumes:
+            - ./docker/phpmyadmin/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./docker/phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
+            - /sessions
