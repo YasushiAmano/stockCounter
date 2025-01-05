@@ -126,3 +126,13 @@ export default defineConfig({
 ```sh
 npm run build
 ```
+
+## 備考
+
+### vendorのコピー
+
+コンテナー内のvendorをコピーする場合は、下記コマンドを使用します。
+
+```sh
+docker cp $(docker-compose ps -q php):/app/vendor ./src/
+```
