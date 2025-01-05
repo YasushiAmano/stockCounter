@@ -1,14 +1,26 @@
 # 環境構築
 
-## FrankenPHP
+## 基本設定
 
-dunglas/frankenphp:1
+### Octane
+
+laravel/octane
+
+Laravel Octane（オクタン）は、FrankenPHP、Open Swoole、Swoole、RoadRunnerなどの高性能なアプリケーションサーバを使用し、アプリケーションを提供することで、アプリケーションのパフォーマンスを向上させます。Octaneはアプリケーションを一度起動したら、メモリ内に保持し、そして超音速でリクエストを送り返します
+
+### FrankenPHP
+
+dunglas/frankenphp
+
+FrankenPHPはGoで書かれたPHPアプリケーションサーバです。Early hints、Brotli、Zstandard圧縮といった最新のウェブ機能をサポートしています。Octane をインストールし、FrankenPHP をサーバとして選択すると、Octaneが自動的にFrankenPHPのバイナリをダウンロードしてインストールします。
 
 ## 初期設定
 
 Laravelはsrcディレクトリに配置しています。
 
 srcの中で.env.base_sampleコピーして.envを作成してください。
+
+FrankenPHPの仕様でコンテナー内では/appがルートディレクトリになります。
 
 ## Dockerを起動
 
