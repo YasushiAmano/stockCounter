@@ -136,3 +136,13 @@ npm run build
 ```sh
 docker cp $(docker-compose ps -q php):/app/vendor ./src/
 ```
+
+### jetstreamのルーティング
+
+
+Jetstreamのルーティングを公開するには、下記コマンドを使用します。
+jetstreamのルーティングは、src/routes/jetstream.phpに記述できるようになります。
+
+```sh
+php artisan vendor:publish --tag=jetstream-routes
+```
