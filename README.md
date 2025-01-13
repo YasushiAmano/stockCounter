@@ -14,6 +14,20 @@ dunglas/frankenphp
 
 FrankenPHPはGoで書かれたPHPアプリケーションサーバです。Early hints、Brotli、Zstandard圧縮といった最新のウェブ機能をサポートしています。Octane をインストールし、FrankenPHP をサーバとして選択すると、Octaneが自動的にFrankenPHPのバイナリをダウンロードしてインストールします。
 
+起動しない場合下記を追加
+
+```octane.php
+'max_requests' => env('OCTANE_MAX_REQUESTS', 500),
+'restart_worker_on_exit' => env('OCTANE_RESTART_WORKER', true),
+'workers' => env('OCTANE_WORKERS', null),
+```
+
+```.env
+OCTANE_MAX_REQUESTS=500
+OCTANE_RESTART_WORKER=true
+OCTANE_WORKERS=null
+```
+
 ## 初期設定
 
 Laravelはsrcディレクトリに配置しています。
