@@ -40,6 +40,10 @@ return [
 
     'server' => env('OCTANE_SERVER', 'roadrunner'),
 
+    'max_requests' => env('OCTANE_MAX_REQUESTS', 500),
+    'restart_worker_on_exit' => env('OCTANE_RESTART_WORKER', true),
+    'workers' => env('OCTANE_WORKERS', null),
+
     /*
     |--------------------------------------------------------------------------
     | Force HTTPS
