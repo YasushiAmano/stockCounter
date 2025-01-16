@@ -16,19 +16,19 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::prex('manager')
+Route::prefix('manager')
     ->middleware('can:manager-higher')->group(function () {
-        Route::get('index', function () {
+        Route::get('/index', function () {
             dd('manager');
         });
     });
 Route::middleware('can:user-higher')->group(function () {
-    Route::get('index', function () {
+    Route::get('/index', function () {
         dd('user');
     });
 });
 Route::middleware('can:admin')->group(function () {
-    Route::get('index', function () {
+    Route::get('/index', function () {
         dd('admin');
     });
 });

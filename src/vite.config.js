@@ -12,12 +12,11 @@ export default defineConfig({
         host: '0.0.0.0',
         hmr: {
             host: 'localhost',
-            protocol: 'ws',
-            clientPort: 5173,
-            port: 5173,
+            protocol: 'ws'  // WebSocketプロトコルを明示的に指定
         },
         watch: {
-            usePolling: true,
+            usePolling: true  // ファイル変更の検知を確実にする
         },
+        port: 5173,  // ポートを明示的に指定
     },
 });

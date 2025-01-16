@@ -42,6 +42,12 @@ FrankenPHPの仕様でコンテナー内では/appがルートディレクトリ
 docker compose up -d
 ```
 
+## vendorとnode_modulesの
+
+```sh
+docker-compose exec php bash -c "sh ./init.sh"
+```
+
 ### アプリケーションキーの生成
 
 .envのAPP_KEYを生成します。
@@ -84,7 +90,7 @@ Jetstreamは、 ログイン、新規登録、メール検証、２段階認証�
 Laravelの初期画面の右上にLoginとRegisterのリンクがあります。
 Registerから管理者を作成してください。
 
-Jetstreamの初期化は、コンテナー内で実行してください。
+Jetstreamの初期化は、コンテナー内で実行してください。(インストール済み)
 
 ```sh
 composer require laravel/jetstream
