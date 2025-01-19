@@ -11,9 +11,18 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    ->withProviders([
+        // 既存のプロバイダー
+        Spatie\Permission\PermissionServiceProvider::class,
+    ])
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // middleware.phpの設定を読み込む
+        $config = require __DIR__ . '/middleware.php';
+
+        // エイリアスを登録
+        $middleware->alias($config['aliases']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->create();

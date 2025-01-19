@@ -14,21 +14,46 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-});
 
-Route::prefix('manager')
-    ->middleware('can:manager-higher')->group(function () {
+    // デバッグ用のルートを追加
+    Route::get('/debug-permission', function () {
+        $user = auth()->user();
+        dd([
+            'user' => $user->name,
+            'email' => $user->email,
+            'roles' => $user->getRoleNames()->toArray(),
+            'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
+            'has_manager_permission' => $user->hasPermissionTo('view_manager_page'),
+        ]);
+    });
+
+    // マネージャー用ルート
+    Route::group([
+        'prefix' => 'manager',
+        'middleware' => 'permission:view_manager_page'
+    ], function () {
         Route::get('/index', function () {
-            dd('manager');
+            return 'マネージャーページにアクセスできました！';
         });
     });
-Route::middleware('can:user-higher')->group(function () {
-    Route::get('/index', function () {
-        dd('user');
+
+    // 管理者用ルート
+    Route::group([
+        'prefix' => 'admin',
+        'middleware' => 'permission:view_admin_page'
+    ], function () {
+        Route::get('/index', function () {
+            return '管理者ページにアクセスできました！';
+        });
     });
-});
-Route::middleware('can:admin')->group(function () {
-    Route::get('/index', function () {
-        dd('admin');
+
+    // ユーザー用ルート
+    Route::group([
+        'prefix' => 'user',
+        'middleware' => 'permission:view_user_page'
+    ], function () {
+        Route::get('/index', function () {
+            return 'ユーザーページにアクセスできました！';
+        });
     });
 });

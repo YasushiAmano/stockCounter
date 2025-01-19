@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -14,23 +12,28 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([[
-            'name' => 'admin',
+        // 管理者ユーザーの作成
+        $admin = User::create([
+            'name' => 'Admin User',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('password'),
-            'role' => 1
-        ],
-        [
-            'name' => 'manager',
+            'password' => bcrypt('password')
+        ]);
+        $admin->assignRole('admin');
+
+        // マネージャーユーザーの作成
+        $manager = User::create([
+            'name' => 'Manager User',
             'email' => 'manager@manager.com',
-            'password' => Hash::make('password'),
-            'role' => 5
-        ],
-        [
-            'name' => 'test',
-            'email' => 'test@test.com',
-            'password' => Hash::make('password'),
-            'role' => 9
-        ]]);
+            'password' => bcrypt('password')
+        ]);
+        $manager->assignRole('manager');
+
+        // 一般ユーザーの作成
+        $user = User::create([
+            'name' => 'Normal User',
+            'email' => 'user@user.com',
+            'password' => bcrypt('password')
+        ]);
+        $user->assignRole('user');
     }
 }
