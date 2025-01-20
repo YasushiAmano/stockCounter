@@ -42,11 +42,15 @@ FrankenPHPの仕様でコンテナー内では/appがルートディレクトリ
 docker compose up -d
 ```
 
-## vendorとnode_modulesの
+## vendorとnode_modulesの初期設定
+
+`./init.sh`をsrcにコピーして下記を実行してください。
 
 ```sh
 docker-compose exec php bash -c "sh ./init.sh"
 ```
+
+実行後、src/init.shは削除してください。
 
 ### アプリケーションキーの生成
 
@@ -113,37 +117,19 @@ npm run dev
 
 Viteの開発サーバーが正常に起動すると、ターミナルで待ち受け状態になります。
 
-vite.config.jsのVITE_DEV_SERVER_URLを.envに設定。
-
-```sh
-VITE_DEV_SERVER_URL=http://localhost:5173
-```
-
-また、vite.config.jsのserver.hmr.hostをlocalhostに設定してください。
-
-```js
-export default defineConfig({
-    plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-        }),
-    ],
-    server: {
-        host: '0.0.0.0',
-        hmr: {
-            host: 'localhost',
-            protocol: 'ws'  // WebSocketプロトコルを明示的に指定
-        },
-        watch: {
-            usePolling: true  // ファイル変更の検知を確実にする
-        },
-        port: 5173,  // ポートを明示的に指定
-    },
-});
-```
 
 ### 本番用ビルド
+
+package.jsonを下記のようにしてください。
+
+`--host` がついていない場合つけてください。
+
+```json
+    "scripts": {
+        "dev": "vite --host",
+        "build": "vite build"
+    },
+```
 
 ```sh
 npm run build
@@ -151,13 +137,6 @@ npm run build
 
 ## 備考
 
-### vendorのコピー
-
-コンテナー内のvendorをコピーする場合は、下記コマンドを使用します。
-
-```sh
-docker cp $(docker-compose ps -q php):/app/vendor ./src/
-```
 
 ### jetstreamのルーティング
 

@@ -7,11 +7,9 @@ services:
         ports:
             - "3000:3000"
             - "80:8000"
-            - "5173:5173" # viteのポート
+            - "5173:5173"  # Viteポート
         volumes:
             - ./src:/app
-            # - /app/vendor
-            # - /app/node_modules
             - ./docker/caddy/data:/data
             - ./docker/caddy/config:/config
             - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
