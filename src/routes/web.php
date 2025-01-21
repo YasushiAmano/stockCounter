@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,9 +33,7 @@ Route::middleware([
         'prefix' => 'manager',
         'middleware' => 'permission:view_manager_page'
     ], function () {
-        Route::get('/index', function () {
-            return 'マネージャーページにアクセスできました！';
-        });
+        Route::resource('events', EventController::class);
     });
 
     // 管理者用ルート
