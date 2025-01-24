@@ -16,26 +16,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    // デバッグ用のルートを追加
-    Route::get('/debug-permission', function () {
-        $user = auth()->user();
-        dd([
-            'user' => $user->name,
-            'email' => $user->email,
-            'roles' => $user->getRoleNames()->toArray(),
-            'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
-            'has_manager_permission' => $user->hasPermissionTo('view_manager_page'),
-        ]);
-    });
-
-    // マネージャー用ルート
-    Route::group([
-        'prefix' => 'manager',
-        'middleware' => 'permission:view_manager_page'
-    ], function () {
-        Route::resource('events', EventController::class);
-    });
-
     // 管理者用ルート
     Route::group([
         'prefix' => 'admin',
@@ -44,6 +24,14 @@ Route::middleware([
         Route::get('/index', function () {
             return '管理者ページにアクセスできました！';
         });
+    });
+
+    // マネージャー用ルート
+    Route::group([
+        'prefix' => 'manager',
+        'middleware' => 'permission:view_manager_page'
+    ], function () {
+        Route::resource('events', EventController::class); // 各メソッドに対応
     });
 
     // ユーザー用ルート

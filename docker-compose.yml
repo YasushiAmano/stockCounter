@@ -3,7 +3,8 @@ services:
         build:
             context: .
             dockerfile: ./docker/php/Dockerfile
-        command: php artisan octane:start --server=frankenphp
+        # command: php artisan octane:start --server=frankenphp
+        command: php artisan serve
         ports:
             - "3000:3000"
             - "80:8000"
