@@ -11,7 +11,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,26 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'event_name' => ['required', 'max:50'],
+            'information' => ['required', 'max:200'],
+            'event_date' => ['required', 'date'],
+            'start_time' => ['required'],
+            'end_time' => ['required', 'after:start_time'],
+            'max_people' => ['required', 'numeric', 'between:1,20'],
+            'is_visible' => ['required', 'boolean']
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'event_name' => 'イベント名',
+            'information' => 'イベント詳細',
+            'event_date' => 'イベントの日付',
+            'start_time' => '開始時間',
+            'end_time' => '終了時間',
+            'max_people' => '定員',
+            'is_visible' => '表示/非表示'
         ];
     }
 }

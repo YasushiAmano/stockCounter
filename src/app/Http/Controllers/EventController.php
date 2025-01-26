@@ -36,7 +36,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        //
+        return dd($request->all());
     }
 
     /**

@@ -150,4 +150,13 @@ return [
     'uppercase'            => ':Attributeは、大文字で入力してください。',
     'url'                  => ':Attributeは、有効なURL形式で指定してください。',
     'uuid'                 => ':Attributeは、有効なUUIDである必要があります。',
+    'attributes' => [
+        'event_name' => 'イベント名',
+        'information' => 'イベント詳細',
+        'event_date' => 'イベントの日付',
+        'start_time' => '開始時間',
+        'end_time' => '終了時間',
+        'max_people' => '定員',
+        'is_visible' => '表示/非表示'
+    ],
 ];
