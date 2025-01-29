@@ -10,6 +10,21 @@ export default defineConfig({
                 'resources/js/flatpickr.js',
             ],
             refresh: true,
+            publicDirectory: 'public',
         }),
-    ]
+    ],
+    server: {
+        host: '0.0.0.0',
+    },
+    base: 'http://localhost/',  // この行を追加
+    build: {
+        manifest: 'manifest.json',
+        outDir: 'public/build',
+        assetsDir: '',
+        rollupOptions: {
+            output: {
+                manualChunks: undefined
+            }
+        }
+    }
 });

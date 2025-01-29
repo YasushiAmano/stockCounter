@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host",
-        "build": "vite build"
+        "build": "ASSET_URL=http://localhost vite build"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",

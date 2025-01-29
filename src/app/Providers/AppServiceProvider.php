@@ -24,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
             URL::forceRootUrl(env('APP_URL'));
             URL::forceScheme('http');
         }
+
+        // 強制的にアセットURLをlocalhostに設定
+        $this->app['url']->forceRootUrl(env('APP_URL', 'http://localhost'));
     }
 }

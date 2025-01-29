@@ -153,6 +153,8 @@ return [
     'attributes' => [
         'event_name' => 'イベント名',
         'information' => 'イベント詳細',
+        'start_date' => '開始日',
+        'end_date' => '終了日',
         'event_date' => 'イベントの日付',
         'start_time' => '開始時間',
         'end_time' => '終了時間',

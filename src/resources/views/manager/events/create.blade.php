@@ -25,7 +25,7 @@
                         </div>
                         <div class="mt-4">
                             <x-label for="information" value="イベント詳細" />
-                            <x-textarea row="3" id="information" class="block mt-1 w-full">{{ old('information') }}</x-textarea>
+                            <x-textarea row="3" id="information" name="information" class="block mt-1 w-full">{{ old('information') }}</x-textarea>
                         </div>
                         <div class="md:flex justify-between">
                             <div class="mt-4">
@@ -47,7 +47,7 @@
                         <div class="md:flex justify-between item-end">
                             <div class="mt-4">
                                 <x-label for="max_people" value="定員" />
-                                <x-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" required />
+                                <x-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" :value="old('max_people')" required />
                             </div>
                             <div class="mt-4">
                                 <div class="flex space-x-4 justify-around mt-4">

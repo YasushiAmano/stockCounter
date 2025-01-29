@@ -9,4 +9,18 @@ class Event extends Model
 {
     /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'information',
+        'max_people',
+        'start_date',
+        'end_date',
+        'is_visible'
+    ];
 }

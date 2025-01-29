@@ -10,6 +10,11 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <section class="text-gray-600 body-font">
                     <div class="container px-5 py-5 mx-auto">
+                        @session('status')
+                            <div class="mb-4 font-medium text-sm text-green-600">
+                                {{ $value }}
+                            </div>
+                        @endsession
                         <button onclick="location.href='{{ route('events.create') }}'"
                             class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mb-4">
                             新規登録

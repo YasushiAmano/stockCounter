@@ -6,7 +6,7 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class EventController extends Controller
 {
     /**
@@ -36,7 +36,28 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        return dd($request->all());
+        $check = Event::whereDate('start_date', $request['event_date'])
+        ->whereTime('end_date', '>', $request['start_time'])
+        ->whereTime('start_date', '<', $request['end_time'])
+        ->exists();
+
+        $start = "{$request->event_date} {$request->start_time}";
+        $end = "{$request->event_date} {$request->end_time}";
+        $start_date = Carbon::createFromFormat('Y-m-d H:i', $start);
+        $end_date = Carbon::createFromFormat('Y-m-d H:i', $end);
+
+        Event::create([
+            'name' => $request->event_name,
+            'information' => $request->information,
+            'max_people' => $request->max_people,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'is_visible' => $request->is_visible
+        ]);
+
+        session()->flash('status', '登録しました。');
+
+        return redirect()->route('events.index');
     }
 
     /**
