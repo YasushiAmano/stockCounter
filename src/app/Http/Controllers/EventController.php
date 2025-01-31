@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Http\Services\EventServices;
+
 class EventController extends Controller
 {
     /**
@@ -36,15 +38,25 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        $check = Event::whereDate('start_date', $request['event_date'])
-        ->whereTime('end_date', '>', $request['start_time'])
-        ->whereTime('start_date', '<', $request['end_time'])
-        ->exists();
+        $check = EventServices::checkEventDuplication(
+            $request['event_date'],
+            $request['start_time'],
+            $request['end_time']
+        );
 
-        $start = "{$request->event_date} {$request->start_time}";
-        $end = "{$request->event_date} {$request->end_time}";
-        $start_date = Carbon::createFromFormat('Y-m-d H:i', $start);
-        $end_date = Carbon::createFromFormat('Y-m-d H:i', $end);
+        if($check){
+            session()->flash('status', 'この時間帯は既に他の予約が存在します。');
+            return view('manager.events.create');
+        }
+
+        $start_date  = EventServices::joinDateAndTime(
+            $request['event_date'],
+            $request['start_time']
+        );
+        $end_date = EventServices::joinDateAndTime(
+            $request['event_date'],
+            $request['end_time']
+        );
 
         Event::create([
             'name' => $request->event_name,

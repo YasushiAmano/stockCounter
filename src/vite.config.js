@@ -16,7 +16,6 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
     },
-    base: 'http://localhost/',  // この行を追加
     build: {
         manifest: 'manifest.json',
         outDir: 'public/build',
