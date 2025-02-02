@@ -15,6 +15,15 @@ export default defineConfig({
     ],
     server: {
         host: '0.0.0.0',
+        port: 5173,
+        https: false,
+        hmr: {
+            host: 'localhost',
+            protocol: 'ws',
+        },
+        watch: {
+            usePolling: true,
+        },
     },
     build: {
         manifest: 'manifest.json',
@@ -25,5 +34,5 @@ export default defineConfig({
                 manualChunks: undefined
             }
         }
-    }
+    },
 });

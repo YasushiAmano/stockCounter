@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class EventServices
 {
-    public function checkEventDuplication($eventDate, $startTime, $endTime)
+    public static function checkEventDuplication($eventDate, $startTime, $endTime)
     {
         return DB::table('events')
             ->whereDate('start_date', $eventDate)
