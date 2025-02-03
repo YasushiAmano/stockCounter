@@ -109,8 +109,8 @@ return [
         OperationTerminated::class => [
             FlushOnce::class,
             FlushTemporaryContainerInstances::class,
-            // DisconnectFromDatabases::class,
-            // CollectGarbage::class,
+            DisconnectFromDatabases::class,
+            CollectGarbage::class,
         ],
 
         WorkerErrorOccurred::class => [
@@ -225,7 +225,7 @@ return [
 
     'max_execution_time' => 30,
 
-    // 'host' => '0.0.0.0',
-    // 'port' => env('OCTANE_PORT', 8000),
+    'host' => '0.0.0.0',
+    'port' => env('OCTANE_PORT', 8000),
 
 ];
