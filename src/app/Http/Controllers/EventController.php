@@ -16,7 +16,9 @@ class EventController extends Controller
      */
     public function index()
     {
+        $today = Carbon::today();
         $events = DB::table('events')
+            ->where('start_date', '>=', $today)
             ->orderBy('start_date', 'asc') //開始日時順
             ->paginate(10); // 10件ずつ
         return view(
@@ -44,7 +46,7 @@ class EventController extends Controller
             $request['end_time']
         );
 
-        if($check){
+        if ($check) {
             session()->flash('status', 'この時間帯は既に他の予約が存在します。');
             return view('manager.events.create');
         }
@@ -59,7 +61,7 @@ class EventController extends Controller
         );
 
         Event::create([
-            'name' => $request->event_name,
+            'name' => $request->name,
             'information' => $request->information,
             'max_people' => $request->max_people,
             'start_date' => $start_date,
@@ -86,7 +88,8 @@ class EventController extends Controller
             'event',
             'eventDate',
             'startTime',
-            'endTime'));
+            'endTime'
+        ));
     }
 
     /**
@@ -94,7 +97,17 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $event = Event::findOrFail($event->id);
+        $eventDate = $event->editEventDate;
+        $startTime = $event->startTime;
+        $endTime = $event->endTime;
+
+        return view('manager.events.edit', compact(
+            'event',
+            'eventDate',
+            'startTime',
+            'endTime'
+        ));
     }
 
     /**
@@ -102,7 +115,58 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $count = EventServices::countEventDuplication(
+            $request['event_date'],
+            $request['start_time'],
+            $request['end_time']
+        );
+
+        if ($count > 1) {
+            session()->flash('status', 'この時間帯は既に他の予約が存在します。');
+            $event = Event::findOrFail($event->id);
+            $eventDate = $event->editEventDate;
+            $startTime = $event->startTime;
+            $endTime = $event->endTime;
+            return view('manager.events.edit',compact(
+                'event',
+                'eventDate',
+                'startTime',
+                'endTime'
+            ));
+        }
+
+        $start_date  = EventServices::joinDateAndTime(
+            $request['event_date'],
+            $request['start_time']
+        );
+        $end_date = EventServices::joinDateAndTime(
+            $request['event_date'],
+            $request['end_time']
+        );
+
+        $event = Event::findOrFail($event->id);
+
+        $event->name = $request['name'];
+        $event->information = $request['information'];
+        $event->max_people = $request['max_people'];
+        $event->start_date = $start_date;
+        $event->end_date = $end_date;
+        $event->is_visible = $request['is_visible'];
+        $event->save();
+
+        session()->flash('status', '更新しました。');
+
+        return redirect()->route('events.index');
+    }
+
+    public function past()
+    {
+        $today = Carbon::today();
+        $events = DB::table('events')
+            ->where('start_date', '<', $today)
+            ->orderBy('start_date', 'desc')
+            ->paginate(10);
+        return view('manager.events.past', compact('events'));
     }
 
     /**

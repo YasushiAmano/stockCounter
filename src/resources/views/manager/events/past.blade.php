@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            イベント管理
+            過去のイベント一覧
         </h2>
     </x-slot>
 
@@ -15,16 +15,6 @@
                                 {{ $value }}
                             </div>
                         @endsession
-                        <div class="flex justify-end">
-                            <button onclick="location.href='{{ route('event.past') }}'"
-                                class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded mb-4">
-                                過去のイベント一覧
-                            </button>
-                            <button onclick="location.href='{{ route('events.create') }}'"
-                                class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mb-4">
-                                新規登録
-                            </button>
-                        </div>
                         <div class="w-full mx-auto overflow-auto">
                             <table class="table-auto w-full text-left whitespace-no-wrap">
                                 <thead>
@@ -53,9 +43,7 @@
                                     @foreach ($events as $event)
                                         {{-- 複数形 as 単数系 --}}
                                         <tr>
-                                            <td class="text-blue-500 px-4 py-3"><a
-                                                    href="{{ route('events.show', ['event' => $event->id]) }}">{{ $event->name }}</a>
-                                            </td>
+                                            <td class="text-blue-500 px-4 py-3"><a href="{{ route('events.show', ['event' => $event->id]) }}">{{ $event->name }}</a></td>
                                             <td class="px-4 py-3">{{ $event->start_date }}</td>
                                             <td class="px-4 py-3">{{ $event->end_date }}</td>
                                             <td class="px-4 py-3">後程</td>

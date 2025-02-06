@@ -31,6 +31,7 @@ Route::middleware([
         'prefix' => 'manager',
         'middleware' => 'permission:view_manager_page'
     ], function () {
+        Route::get('events/past', [EventController::class, 'past'])->name('event.past');
         Route::resource('events', EventController::class); // 各メソッドに対応
     });
 

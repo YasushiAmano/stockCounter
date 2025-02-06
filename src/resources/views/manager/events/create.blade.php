@@ -19,9 +19,9 @@
                     <form method="POST" action="{{ route('events.store') }}">
                         @csrf
                         <div class="mt-4">
-                            <x-label for="event_name" value="イベント名" />
-                            <x-input id="event_name" class="block mt-1 w-full" type="text" name="event_name"
-                                :value="old('event_name')" required autofocus autocomplete="off" />
+                            <x-label for="name" value="イベント名" />
+                            <x-input id="name" class="block mt-1 w-full" type="text" name="name"
+                                :value="old('name')" required autofocus autocomplete="off" />
                         </div>
                         <div class="mt-4">
                             <x-label for="information" value="イベント詳細" />
