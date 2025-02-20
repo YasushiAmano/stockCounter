@@ -36,7 +36,7 @@ class EventServices
             ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
             ->whereNull('canceled_date')
             ->groupBy('event_id');
-        $events = DB::table('events')
+        return DB::table('events')
             ->leftJoinSub(
                 $reservedPeople,
                 'reservedPeople',
@@ -47,6 +47,5 @@ class EventServices
             ->whereBetween('start_date', [$startDate, $endDate])
             ->orderBy('events.start_date', 'asc')
             ->get();
-        return $events;
     }
 }
